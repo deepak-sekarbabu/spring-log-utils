@@ -1,5 +1,7 @@
 # Spring Log Utils
 
+[My Blog Post on this Repo](https://technologytrendsinjava.blogspot.com/2025/05/enhance-your-spring-application-logging.html)
+
 `spring-log-utils` is a library designed to enhance logging capabilities in Spring-based applications. It provides features for logging HTTP methods, specific endpoints, and methods, as well as masking sensitive data in logs. The library leverages Spring Boot's autoconfiguration mechanism to simplify integration and usage.
 
 This library simplifies logging in Spring applications, making it easier to monitor and debug while ensuring sensitive data is protected.
