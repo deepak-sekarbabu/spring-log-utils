@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.deepak.spring.log.utils.features.aspect.GlobalHttpMethodLogAspect\
+  com.deepak.spring.log.utils.features.aspect.LogExecutionAspect\
+  com.deepak.spring.log.utils.features.aspect.HttpMethodLogExecutionAspect

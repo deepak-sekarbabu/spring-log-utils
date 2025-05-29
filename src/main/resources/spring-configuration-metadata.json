@@ -1,0 +1,24 @@
+{
+    "groups": [
+        {
+            "name": "spring.log-utils.global",
+            "type": "com.deepak.spring.log.utils.properties.GlobalProperties",
+            "sourceType": "com.deepak.spring.log.utils.properties.GlobalProperties"
+        },
+        {
+            "name": "spring.log-utils.global.httpMethod",
+            "type": "com.deepak.spring.log.utils.properties.HttpMethodProperties",
+            "sourceType": "com.deepak.spring.log.utils.properties.HttpMethodProperties"
+        }
+    ],
+    "properties": [
+        {
+            "name": "spring.log-utils.global.httpMethod.enabled",
+            "type": "java.lang.Boolean",
+            "description": "Enable all endpoints to be logged.",
+            "defaultValue": "true"
+        }
+    ],
+    "hints": [
+    ]
+}
