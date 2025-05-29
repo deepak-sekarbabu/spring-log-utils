@@ -85,13 +85,13 @@ public class GreetingService {
    @LogExecution
    public User getUser(Long id) {
       return User.builder()
-              .name("Lucas Fernandes")
-              .email("lucas.fernandes@gmail.com")
+              .name("Deepak Sekarbabu")
+              .email("deepak.sekarbabu@gmail.com")
               .document("12345678911")
               .birthDate(LocalDate.now())
-              .age(31)
+              .age(34)
               .phone("11 9999-9999")
-              .address("Rua Flamengo 745")
+              .address("SE Test 745")
               .build();
    }
 }
