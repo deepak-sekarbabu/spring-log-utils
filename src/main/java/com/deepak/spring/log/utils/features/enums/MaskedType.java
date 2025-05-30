@@ -26,7 +26,7 @@ public enum MaskedType {
      * Masks email addresses.
      * Regex: {@code .(?=.{4})(?=[^@])(?=[^@]{4}).}
      */
-    EMAIL(".(?=.{4})(?=[^@])(?=[^@]{4})."),
+    EMAIL("(?<=^[^@]{1})[^@](?=[^@]*?@)|(?<=@.{1}).(?=\\.[^.]+$)"),
     /**
      * Masks document numbers.
      * Regex: {@code .(?=.{3})}
@@ -41,19 +41,19 @@ public enum MaskedType {
     NAME("(?<=.).(?=.*.{2}$)"),
     /**
      * Masks dates.
-     * Regex: {@code .(?=[^ \\/.-].{3}).}
+     * Regex: {@code \d(?=(?:[0-9./\s-]*[0-9]){2})} // Intentionally simple Javadoc for now
      */
-    DATE(".(?=[^ \\\\/.-].{3})."),
+    DATE("\\d(?=(?:[0-9./\\s-]*[0-9]){2})"),
     /**
      * Masks addresses.
-     * Regex: {@code .(?=.{3})[^, ]}
+     * Regex: {@code [a-zA-Z0-9](?=(?:.*[a-zA-Z0-9]){3})} // Intentionally simple Javadoc for now
      */
-    ADDRESS(".(?=.{3})[^, ]"),
+    ADDRESS("[a-zA-Z0-9](?=(?:.*[a-zA-Z0-9]){3})"),
     /**
      * Masks zip codes.
-     * Regex: {@code .(?=.{3})[^-]}
+     * Regex: {@code \d(?=(?:\D*\d){2})} // Intentionally simple Javadoc for now
      */
-    ZIP_CODE(".(?=.{3})[^-]"),
+    ZIP_CODE("\\d(?=(?:\\D*\\d){2})"),
     /**
      * Masks numeric values.
      * Regex: {@code \d}
@@ -61,9 +61,9 @@ public enum MaskedType {
     NUMBER("\\d"),
     /**
      * Masks telephone numbers.
-     * Regex: {@code .(?=.{2})[^-]}
+     * Regex: {@code \d(?=(?:\D*\d){2})} // Intentionally simple Javadoc for now
      */
-    TELEPHONE(".(?=.{2})[^-]"),
+    TELEPHONE("\\d(?=(?:\\D*\\d){2})"),
     /**
      * Masks passwords.
      * Regex: {@code (?<=.).}
