@@ -8,41 +8,46 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates that the annotated field's sensitive data should be masked during logging operations.
+ * Marks a field whose value should be masked when its containing object is processed by
+ * features like {@link com.deepak.spring.log.utils.features.interfaces.LogMask#mask(Object)}.
+ * <p>
+ * This annotation allows developers to indicate that a field contains sensitive information
+ * (e.g., personal data, financial details) that should not appear in plain text in logs or
+ * other string representations of the object.
+ * <p>
+ * The actual masking is performed by replacing characters matched by a regex pattern with an asterisk ('*').
+ * The regex pattern can be selected from a predefined set using {@link #maskedType()} or
+ * specified as a custom pattern using {@link #customMaskRegex()}.
+ * <p>
+ * If {@link #customMaskRegex()} is provided and is not blank, it will be used. Otherwise,
+ * the regex pattern associated with the specified {@link #maskedType()} will be used.
  *
- * <p>
- * The masking behavior can be controlled either by a predefined {@link MaskedType} or a custom regular expression.
- * <p>
- * <b>If a {@link #customMaskRegex()} is specified and non-empty, it takes precedence over the regex derived from {@link #maskedType()}.</b>
- * <p>
- * This allows fine-grained control over masking patterns for specific fields.
- *
- * @see MaskedType
+ * @see com.deepak.spring.log.utils.features.enums.MaskedType
+ * @see com.deepak.spring.log.utils.features.interfaces.LogMask
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MaskSensitiveData {
     /**
-     * Specifies a predefined masking pattern type.
+     * Specifies the predefined {@link MaskedType} that dictates the regex pattern for masking.
+     * This type is used if {@link #customMaskRegex()} is not provided or is blank.
      *
-     * <p>
-     * This value is used as the default masking strategy <i>only if no custom regex is provided via {@link #customMaskRegex()}.</i>
-     *
-     * @return The predefined masking type. Defaults to {@link MaskedType#ALL}.
+     * @return The predefined masking strategy. Defaults to {@link MaskedType#ALL},
+     *         which masks all non-whitespace characters.
      */
     MaskedType maskedType() default MaskedType.ALL;
 
     /**
-     * Defines a custom regular expression to mask sensitive data.
+     * Defines a custom Java regular expression (regex) for masking the annotated field's value.
+     * <p>
+     * If this attribute is set to a non-blank string, it takes precedence over the
+     * regex pattern derived from {@link #maskedType()}. This allows for fine-grained,
+     * field-specific masking rules when the predefined types are insufficient.
+     * <p>
+     * The regex should be written to match the characters that need to be replaced by an asterisk.
      *
-     * <p>
-     * <b>This property has higher priority than {@link #maskedType()}.</b> If provided and non-blank,
-     * <p>
-     * the custom regex will override the regex associated with {@link #maskedType()}. Use this to define
-     * <p>
-     * field-specific masking rules that deviate from the predefined patterns.
-     *
-     * @return A custom regex pattern for masking. Defaults to an empty string (no custom regex).
+     * @return A custom regex string. Defaults to an empty string, indicating that
+     *         {@link #maskedType()} should be used.
      */
     String customMaskRegex() default "";
 }

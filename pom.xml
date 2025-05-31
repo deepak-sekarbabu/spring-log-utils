@@ -8,7 +8,15 @@
     <version>1.0.0</version>
     <name>Spring Log Utils</name>
     <description>Utilities for Spring Boot logging</description>
+    <url>https://github.com/deepak-sekarbabu/spring-log-utils</url> <!-- Added project URL -->
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -35,7 +43,14 @@
         <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.6</maven-gpg-plugin.version>
         <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+        <gpg.skip>true</gpg.skip> <!-- Added to skip GPG signing by default for local builds -->
     </properties>
+
+    <scm>
+        <connection>scm:git:git://github.com/deepak-sekarbabu/spring-log-utils.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/deepak-sekarbabu/spring-log-utils.git</developerConnection>
+        <url>https://github.com/deepak-sekarbabu/spring-log-utils/tree/main</url> <!-- Assuming 'main' branch -->
+    </scm>
 
     <dependencies>
         <dependency>
@@ -132,13 +147,38 @@
                     </includes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Optional: Prevent gpg from trying to open dialog for password.
+                                 GPG arguments (e.g., for pinentry-mode) can be configured here if needed.
+                                 Ensure such arguments do not conflict with XML comment syntax if commented out.
+                            -->
+                            <skip>${gpg.skip}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>local-staging</id>
-            <url>file://${project.build.directory}/staging-deploy</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 </project>
